@@ -89,6 +89,9 @@ class SiglipVisionEmbeddings(nn.Module):
         hidden_states = self.fc1(hidden_states)
         # hidden_states: [Batch_Size, Num_Patches, Intermediate_Size]
         hidden_states = nn.functional.gelu(hidden_states, approximate="tanh")
+        # [Batch_Size, Num_Patches, Intermediate_Size] -> [Batch_Size, Num_Patches, Embed_Dim]
+        hidden_states = self.fc2(hidden_states)
+        return hidden_states
  class SiglipEncoderLayer(nn.Module):
      def __init__(self, config: SiglipVisionConfig):
          super().__init__()
